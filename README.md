@@ -24,8 +24,7 @@
 |---|---|
 | 12:00 PM | Ideas revealed — teams choosing from the given set can start coding immediately |
 | 12:00 PM – 4:00 PM | Custom Idea Submission Window |
-| 4:00 PM – 8:00 PM | Idea Review by organizers |
-| 9:00 PM | Idea approval results announced — event officially starts for all teams |
+| 10:00 PM | Idea approval results announced — event officially starts for all teams |
 
 ### Day-1, Day-2, Day-3 — Coding Period
 
@@ -132,7 +131,7 @@ Have a unique idea not listed above? Propose it!
 3. Each team must choose **one idea** — either from the given set or a custom approved idea.
 4. Teams submitting a custom idea can submit a **maximum of 2 ideas** for review.
 5. Teams selecting from the given set may **begin coding at 12PM on Day-0**.
-6. Custom idea teams may begin coding only after **approval at 9PM on Day-0**.
+6. Custom idea teams may begin coding (for custom idea) only after **approval at 10PM on Day-0**.
 7. All code must be pushed to a **Git repository** with clear commit history, branching, and PR descriptions.
 8. A **deployed live link** (Vercel/Netlify) must be submitted for full scoring.
 9. Coding officially **stops at the end of Day-3**.
