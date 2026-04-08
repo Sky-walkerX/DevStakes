@@ -47,7 +47,7 @@ export default function Landing({ onNavigate }) {
           </p>
           <div className="hero-actions">
             <button 
-              onClick={() => onNavigate('genre-selection')}
+              onClick={() => onNavigate('gameplay', { genre: 'Cyberpunk' })}
               className="btn-primary-large group"
             >
               <div className="btn-primary-overlay" />

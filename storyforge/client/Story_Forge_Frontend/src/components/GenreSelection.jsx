@@ -51,7 +51,7 @@ export default function GenreSelection({ onNavigate }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.05 }}
             whileHover={{ y: -10 }}
-            onClick={() => onNavigate('community-hub')}
+            onClick={() => onNavigate('gameplay', { genre: genre.name })}
             className="genre-card group"
           >
             <img 
