@@ -4,13 +4,13 @@ const sessionService = require('../services/sessionService');
 
 const startStory = async (req, res, next) => {
   try {
-    const { genre } = req.body;
-    if (!genre) return res.status(400).json({ success: false, error: "Genre is required." });
+    const { genre, prompt } = req.body;
+    if (!genre && !prompt) return res.status(400).json({ success: false, error: "Genre or prompt is required." });
 
-    const session = sessionService.createSession(genre);
+    const session = sessionService.createSession(genre || 'Custom');
     
     // Generate initial segment (blocking, but fast via Groq)
-    const storySegment = await aiService.generateStorySegment(null, genre, null);
+    const storySegment = await aiService.generateStorySegment(null, genre || 'Custom', null, false, prompt);
     
     // Fetch image (non-blocking from UI perspective, rapid fallback logic inside)
     const imageUrl = await imageService.generateImage(storySegment.setting, storySegment.mood, genre);

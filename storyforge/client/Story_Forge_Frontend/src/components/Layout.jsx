@@ -10,9 +10,13 @@ import {
   Globe,
   ArrowRight
 } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Layout.css';
 
-export default function Layout({ children, currentScreen, onNavigate }) {
+export default function Layout({ children }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
   return (
     <div className="layout-root">
       {/* TopAppBar */}
@@ -20,7 +24,7 @@ export default function Layout({ children, currentScreen, onNavigate }) {
         <div className="header-left">
           <div 
             className="brand-logo text-glow-primary cursor-pointer"
-            onClick={() => onNavigate('landing')}
+            onClick={() => navigate('/', { state: { transition: 'push_back' } })}
           >
             StoryForge
           </div>
@@ -32,12 +36,12 @@ export default function Layout({ children, currentScreen, onNavigate }) {
           </nav>
         </div>
         <div className="header-right gap-4">
-          <button className="primary-btn">
+          <button className="primary-btn" onClick={() => navigate('/create-story', { state: { transition: 'push' } })}>
             Create Story
           </button>
           <div 
             className="user-profile-icon cursor-pointer"
-            onClick={() => onNavigate('identity')}
+            onClick={() => navigate('/identity', { state: { transition: 'slide_up' } })}
           >
             <UserCircle size={32} />
           </div>
@@ -46,7 +50,7 @@ export default function Layout({ children, currentScreen, onNavigate }) {
 
       {/* SideNavBar Perspective Rail */}
       <aside className="side-nav-bar glass-panel">
-        <div className="profile-container click-target" onClick={() => onNavigate('identity')}>
+        <div className="profile-container click-target" onClick={() => navigate('/identity', { state: { transition: 'slide_up' } })}>
           <div className="profile-image-wrapper">
             <img 
               className="profile-img" 
@@ -60,14 +64,14 @@ export default function Layout({ children, currentScreen, onNavigate }) {
           <NavItem 
             icon={<BookOpen size={24} />} 
             label="Home" 
-            active={currentScreen === 'landing'} 
-            onClick={() => onNavigate('landing')}
+            active={currentPath === '/' || currentPath === '/landing'} 
+            onClick={() => navigate('/', { state: { transition: 'push_back' } })}
           />
           <NavItem 
             icon={<Library size={24} />} 
             label="Library" 
-            active={currentScreen === 'genre-selection'} 
-            onClick={() => onNavigate('genre-selection')}
+            active={currentPath === '/genre-selection'} 
+            onClick={() => navigate('/genre-selection', { state: { transition: 'push_back' } })}
           />
           <NavItem 
             icon={<BarChart3 size={24} />} 
@@ -77,8 +81,8 @@ export default function Layout({ children, currentScreen, onNavigate }) {
           <NavItem 
             icon={<Network size={24} />} 
             label="Nexus" 
-            active={currentScreen === 'community-hub'} 
-            onClick={() => onNavigate('community-hub')}
+            active={currentPath === '/community-hub'} 
+            onClick={() => navigate('/community-hub', { state: { transition: 'push_back' } })}
           />
         </div>
       </aside>
@@ -87,32 +91,55 @@ export default function Layout({ children, currentScreen, onNavigate }) {
         {children}
       </main>
 
-      {/* Footer */}
-      <footer className="footer-container relative w-full">
-        <div className="footer-content max-w-7xl mx-auto flex flex-col justify-between items-center gap-8">
-          <div className="flex flex-col gap-2">
-            <div className="footer-brand text-glow-primary">StoryForge</div>
-            <p className="footer-copy">© 2024 StoryForge AI. Forge your own destiny.</p>
-          </div>
-          <div className="footer-links flex gap-12">
-            <div className="flex flex-col gap-3">
-              <span className="footer-link-header uppercase">Ecosystem</span>
-              <a className="footer-link cursor-pointer">Lore</a>
-              <a className="footer-link cursor-pointer">Architects</a>
+      {/* Visual Partition */}
+      <div className="footer-partition">
+        <div className="partition-core"></div>
+        <div className="partition-glow"></div>
+      </div>
+
+      {/* Mega Footer */}
+      <footer className="footer-container relative">
+        <div className="mega-footer-content w-full max-w-7xl mx-auto">
+          {/* Bottom Grid */}
+          <div className="footer-grid-section pt-8">
+            <div className="footer-brand-col">
+              <div className="footer-brand font-headline text-2xl text-glow-primary mb-4">StoryForge</div>
+              <p className="footer-copy opacity-60 text-sm max-w-xs mb-6">
+                Redefining the boundaries of interactive narrative. The AI orchestrates, you decide the fate.
+              </p>
+              <div className="footer-socials flex gap-4">
+                <button className="social-btn transition-transform hover:-translate-y-1 hover:text-primary">
+                  <Share2 size={20} />
+                </button>
+                <button className="social-btn transition-transform hover:-translate-y-1 hover:text-primary">
+                  <Globe size={20} />
+                </button>
+              </div>
             </div>
-            <div className="flex flex-col gap-3">
-              <span className="footer-link-header uppercase">Protocols</span>
-              <a className="footer-link cursor-pointer">Terms</a>
-              <a className="footer-link cursor-pointer">Privacy</a>
+
+            <div className="footer-links-col">
+              <span className="footer-link-header font-headline uppercase tracking-widest text-primary mb-6 block">Ecosystem</span>
+              <div className="flex flex-col gap-4">
+                <a className="footer-link cursor-pointer hover:text-white transition-colors">Neural Lore</a>
+                <a className="footer-link cursor-pointer hover:text-white transition-colors">Architects Hub</a>
+                <a className="footer-link cursor-pointer hover:text-white transition-colors">Data Streams</a>
+              </div>
+            </div>
+
+            <div className="footer-links-col">
+              <span className="footer-link-header font-headline uppercase tracking-widest text-primary mb-6 block">Protocols</span>
+              <div className="flex flex-col gap-4">
+                <a className="footer-link cursor-pointer hover:text-white transition-colors">Terms of Sync</a>
+                <a className="footer-link cursor-pointer hover:text-white transition-colors">Privacy Paradigm</a>
+                <a className="footer-link cursor-pointer hover:text-white transition-colors">System Status</a>
+              </div>
             </div>
           </div>
-          <div className="footer-socials flex gap-4">
-            <button className="social-btn transition-colors">
-              <Share2 size={20} />
-            </button>
-            <button className="social-btn transition-colors">
-              <Globe size={20} />
-            </button>
+
+          {/* Copyright Bar */}
+          <div className="footer-copyright-bar flex justify-between items-center pt-8 mt-12 border-t border-white/5 opacity-40 text-xs uppercase tracking-widest">
+            <span>© 2026 StoryForge AI Core. All metrics optimal.</span>
+            <span>v2.0.4-beta</span>
           </div>
         </div>
       </footer>

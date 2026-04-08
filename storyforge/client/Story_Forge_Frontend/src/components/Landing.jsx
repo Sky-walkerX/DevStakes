@@ -10,9 +10,11 @@ import {
   Globe,
   Star
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './Landing.css';
 
-export default function Landing({ onNavigate }) {
+export default function Landing() {
+  const navigate = useNavigate();
   return (
     <div className="landing-root">
       {/* Hero Section */}
@@ -47,7 +49,7 @@ export default function Landing({ onNavigate }) {
           </p>
           <div className="hero-actions">
             <button 
-              onClick={() => onNavigate('gameplay', { genre: 'Cyberpunk' })}
+              onClick={() => navigate('/gameplay', { state: { transition: 'fade', genre: 'Cyberpunk' } })}
               className="btn-primary-large group"
             >
               <div className="btn-primary-overlay" />
@@ -57,7 +59,7 @@ export default function Landing({ onNavigate }) {
               </div>
             </button>
             <button 
-              onClick={() => onNavigate('community-hub')}
+              onClick={() => navigate('/community-hub', { state: { transition: 'push' } })}
               className="btn-secondary-large glass-panel"
             >
               <span>Explore Realms</span>

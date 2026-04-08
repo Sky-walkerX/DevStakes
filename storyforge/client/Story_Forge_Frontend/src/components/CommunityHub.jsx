@@ -1,24 +1,23 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  Users, 
-  MessageSquare, 
-  Heart, 
-  Share2, 
-  Search, 
-  TrendingUp,
-  Filter,
-  MoreHorizontal
-} from 'lucide-react';
+import { Search, Hash, TrendingUp, Users, ArrowLeft, MessageSquare, Heart, Share2, Filter, MoreHorizontal } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './CommunityHub.css';
 
-export default function CommunityHub({ onNavigate }) {
+export default function CommunityHub() {
+  const navigate = useNavigate();
   return (
     <div className="hub-root">
       <div className="hub-layout">
         {/* Main Content */}
         <div className="hub-main">
           <header className="hub-header">
+            <button 
+              onClick={() => navigate('/', { state: { transition: 'push_back' } })}
+              className="btn-back"
+            >
+              <ArrowLeft size={20} />
+            </button>
             <div className="hub-badge">
               <Users size={20} />
               <span>Collective Imagination</span>
@@ -78,7 +77,7 @@ export default function CommunityHub({ onNavigate }) {
             <div className="architect-list">
               <ArchitectItem name="Nova_Prime" rank={1} level={99} />
               <ArchitectItem name="Shadow_Weaver" rank={2} level={94} />
-              <ArchitectItem name="Elias_Thorne" rank={3} level={88} isUser onClick={() => onNavigate('identity')} />
+              <ArchitectItem name="Elias_Thorne" rank={3} level={88} isUser onClick={() => navigate('/identity', { state: { transition: 'slide_up' } })} />
               <ArchitectItem name="Luna_X" rank={4} level={82} />
             </div>
             <button className="btn-sidebar-viewall">View Leaderboard</button>

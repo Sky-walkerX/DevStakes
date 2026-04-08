@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Shield, Sparkles, ArrowLeft, RotateCcw, Home, Award, Loader2 } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './StoryPlayer.css';
 
 const API_URL = 'http://localhost:3000/api/story';
 
-export default function StoryPlayer({ onNavigate, genre }) {
+export default function StoryPlayer() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const genre = location.state?.genre || 'Sci-Fi';
+  const prompt = location.state?.prompt;
   const [currentNode, setCurrentNode] = useState(null);
   const [history, setHistory] = useState([]);
   const [isFinished, setIsFinished] = useState(false);
@@ -26,7 +31,7 @@ export default function StoryPlayer({ onNavigate, genre }) {
       const response = await fetch(`${API_URL}/start`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ genre })
+        body: JSON.stringify({ genre, prompt })
       });
       const data = await response.json();
       if (data.success) {
@@ -105,7 +110,7 @@ export default function StoryPlayer({ onNavigate, genre }) {
             key={currentNode?.text || 'scene'} 
             node={currentNode} 
             onChoice={handleChoice} 
-            onNavigate={onNavigate}
+            onNavigate={navigate}
             isLoading={isLoading}
           />
         ) : (
@@ -115,7 +120,7 @@ export default function StoryPlayer({ onNavigate, genre }) {
             ratingInfo={getRating()} 
             finalText={currentNode.text}
             onRestart={startGame}
-            onNavigate={onNavigate}
+            onNavigate={navigate}
           />
         )}
       </AnimatePresence>
@@ -138,7 +143,7 @@ function GameScene({ node, onChoice, onNavigate, isLoading }) {
       <div className="scene-overlay" />
       
       <div className="scene-header">
-        <button className="btn-back-hud" onClick={() => onNavigate('landing')} disabled={isLoading}>
+        <button className="btn-back-hud" onClick={() => navigate('/', { state: { transition: 'push_back' } })} disabled={isLoading}>
           <ArrowLeft size={20} />
           <span>Exit Simulation</span>
         </button>
@@ -236,7 +241,7 @@ function SummaryScreen({ history, ratingInfo, finalText, onRestart, onNavigate }
             <RotateCcw size={20} />
             <span>Forge New Path</span>
           </button>
-          <button onClick={() => onNavigate('landing')} className="btn-summary-action secondary-action">
+          <button onClick={() => navigate('/', { state: { transition: 'push_back' } })} className="btn-summary-action secondary-action">
             <Home size={20} />
             <span>Return to Nexus</span>
           </button>

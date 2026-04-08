@@ -31,7 +31,7 @@ const fallbackPayload = {
 };
 
 const aiService = {
-  generateStorySegment: async (context, genre, previousChoice = null, isEnding = false) => {
+  generateStorySegment: async (context, genre, previousChoice = null, isEnding = false, startPrompt = null) => {
     // If no real API key is set, instantly return the fallback payload to allow the UI to function.
     if (!process.env.GROQ_API_KEY) {
       console.warn("WARNING: No GROQ_API_KEY detected. Returning fallback mock data.");
@@ -41,6 +41,7 @@ const aiService = {
     const promptContext = context ? JSON.stringify(context.map(c => c.node ? c.node.text : c.choice)) : 'None. Begin the epic story.';
     const phaseInstructions = isEnding 
       ? `This is the epic conclusion! Wrap up the story spectacularly based on the user's final choice. Set 'isTerminal' to true and leave the 'choices' array empty.`
+      : startPrompt ? `Generate the start of the story using exactly this premise/scenario: "${startPrompt}"` 
       : `Generate the next segment of the story.`;
 
     const prompt = `Genre: ${genre}\nPrevious Context: ${promptContext}\nUser chose: ${previousChoice || 'N/A: This is the start of the story.'}\n${phaseInstructions}`;

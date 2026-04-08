@@ -11,6 +11,7 @@ import {
   Sun,
   ArrowLeft
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './GenreSelection.css';
 
 const GENRES = [
@@ -24,7 +25,8 @@ const GENRES = [
   { id: 'adventure', name: 'Epic Adventure', icon: <Sun />, colorClass: 'genre-gradient-emerald', image: 'https://picsum.photos/seed/mountain/400/600' },
 ];
 
-export default function GenreSelection({ onNavigate }) {
+export default function GenreSelection() {
+  const navigate = useNavigate();
   return (
     <div className="genre-root">
       <motion.div 
@@ -33,7 +35,7 @@ export default function GenreSelection({ onNavigate }) {
         className="genre-header"
       >
         <button 
-          onClick={() => onNavigate('landing')}
+          onClick={() => navigate('/', { state: { transition: 'push_back' } })}
           className="btn-back"
         >
           <ArrowLeft size={20} />
@@ -51,7 +53,7 @@ export default function GenreSelection({ onNavigate }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.05 }}
             whileHover={{ y: -10 }}
-            onClick={() => onNavigate('gameplay', { genre: genre.name })}
+            onClick={() => navigate('/gameplay', { state: { transition: 'fade', genre: genre.name } })}
             className="genre-card group"
           >
             <img 

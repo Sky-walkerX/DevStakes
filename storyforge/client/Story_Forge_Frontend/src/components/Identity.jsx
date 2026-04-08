@@ -9,12 +9,13 @@ import {
   Zap,
   Edit3,
   LogOut,
-  ArrowLeft,
   Globe
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './Identity.css';
 
-export default function Identity({ onNavigate }) {
+export default function Identity() {
+  const navigate = useNavigate();
   return (
     <div className="identity-root">
       <motion.div 
@@ -108,7 +109,7 @@ export default function Identity({ onNavigate }) {
 
         <div className="disconnect-container">
           <button 
-            onClick={() => onNavigate('landing')}
+            onClick={() => navigate('/', { state: { transition: 'slide_up' } })}
             className="btn-disconnect"
           >
             <LogOut size={20} />
