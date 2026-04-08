@@ -1,14 +1,14 @@
 # Aegis: Kinetic Archive
 
 ## Team Name
-Your team name here
+WYM
 
 ## Team Members
 - Love Yadav (GitHub: @loveyadav1015)
-- Name 2 (GitHub: @username)
-- Name 3 (GitHub: @username)
-- Name 4 (GitHub: @username)
-- Name 5 (GitHub: @username) — optional
+- Ayush Kumar (GitHub: @GOLDEN-DEVIL)
+- Piyansh Shukla (GitHub: @P1yansh )
+- Rajmohan Verma (GitHub: @rajv20)
+
 
 ## Idea Chosen
 Smart Exam Preparation Planner with an interactive node-based learning roadmap.
