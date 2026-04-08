@@ -5,6 +5,7 @@ import Landing from './components/Landing';
 import GenreSelection from './components/GenreSelection';
 import CommunityHub from './components/CommunityHub';
 import Identity from './components/Identity';
+import StoryPlayer from './components/StoryPlayer';
 
 const variants = {
   push: {
@@ -32,10 +33,11 @@ const variants = {
 export default function App() {
   const [nav, setNav] = useState({
     currentScreen: 'landing',
-    transition: 'fade'
+    transition: 'fade',
+    data: null
   });
 
-  const navigate = (to) => {
+  const navigate = (to, data = null) => {
     let transition = 'push';
 
     if (to === 'landing') {
@@ -46,12 +48,15 @@ export default function App() {
       transition = 'push_back';
     } else if (nav.currentScreen === 'community-hub' && to === 'genre-selection') {
       transition = 'push_back';
+    } else if (to === 'gameplay') {
+      transition = 'fade';
     }
 
     setNav({
       currentScreen: to,
       previousScreen: nav.currentScreen,
-      transition
+      transition,
+      data
     });
     
     window.scrollTo(0, 0);
@@ -67,6 +72,8 @@ export default function App() {
         return <CommunityHub onNavigate={navigate} />;
       case 'identity':
         return <Identity onNavigate={navigate} />;
+      case 'gameplay':
+        return <StoryPlayer onNavigate={navigate} genre={nav.data?.genre || 'Sci-Fi'} />;
       default:
         return <Landing onNavigate={navigate} />;
     }

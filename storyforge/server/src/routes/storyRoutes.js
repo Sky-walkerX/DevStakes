@@ -1,13 +1,9 @@
-/**
- * Express routes for /api/story endpoints
- */
 const express = require('express');
 const router = express.Router();
+const storyController = require('../controllers/storyController');
 
-// Mock controllers for now until implemented
-router.post('/start', (req, res) => res.json({ message: 'Started story' }));
-router.post('/continue', (req, res) => res.json({ message: 'Continued story' }));
-router.post('/finalize', (req, res) => res.json({ message: 'Finalized story' }));
-router.get('/:sessionId', (req, res) => res.json({ message: 'Got story' }));
+router.post('/start', storyController.startStory);
+router.post('/next', storyController.nextStory);
+router.get('/session/:sessionId', storyController.getSession);
 
 module.exports = router;
