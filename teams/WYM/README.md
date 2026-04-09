@@ -74,7 +74,7 @@ Key backend services driving the app's logic include:
 - Groq API Key (Optional, for AI features)
 
 ## Live Demo
-Add your deployed app link here.
+(https://silly-paprenjak-720283.netlify.app/)
 
 ## Screenshots / Demo
-[Add screenshots or a demo video link here.](https://drive.google.com/file/d/1T2iowKmj4HrRalTDpcN7jDS4QC6DK5nu/view?usp=sharing)
+(https://drive.google.com/file/d/1T2iowKmj4HrRalTDpcN7jDS4QC6DK5nu/view?usp=sharing)

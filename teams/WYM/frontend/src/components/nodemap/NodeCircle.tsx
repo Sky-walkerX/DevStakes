@@ -133,11 +133,12 @@ function NodeCircleComponent({ node }: NodeCircleProps) {
         {isLocked ? (
           <Lock size={18} className="text-zinc-600" />
         ) : (
-          <IconComponent
-            size={20}
-            className={isCompleted ? 'text-[#34d399]' : 'text-zinc-400'}
-            style={{ color: isCompleted ? '#34d399' : node.color }}
-          />
+          <div style={{ color: isCompleted ? '#34d399' : node.color }}>
+            <IconComponent
+              size={20}
+              className={isCompleted ? 'text-[#34d399]' : 'text-zinc-400'}
+            />
+          </div>
         )}
       </div>
 
