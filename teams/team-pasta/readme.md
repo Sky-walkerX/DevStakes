@@ -5,10 +5,10 @@ PASTA
 
 ## Team Members
 - Parth Badgire (GitHub: @parthbadgire-code)
-- Advait Deshpande 
-- Samruddhi More 
-- Aary Garge 
-- Tisha Sarkar 
+- Advait Deshpande (GitHub: @ADVAITRD1296)
+- Samruddhi More (GitHub: @samruddhimore27)
+- Aary Garge (GitHub: @aary7126)
+- Tisha Sarkar (GitHub: @TishaSarkar541)
 
 ## Idea Chosen
 Custom :  Interactive Crime Investigation Simulator
@@ -59,6 +59,9 @@ Score & Ranking
 Case Summary (what you found, what you missed)
 Share Results (screenshot or social)
 Play Again / Next Case
+7. Auth
+added log in, register and leaderboard
+using Supabase Auth 
 
 ## 🚀 How to Run Locally
 
