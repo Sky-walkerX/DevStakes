@@ -1,0 +1,13 @@
+-- STORYFORGE DATABASE SCHEMA
+-- 
+-- Table: stories
+-- Purpose: Store story sessions and metadata
+-- Columns: id (UUID), session_id (TEXT), genre (TEXT), status (TEXT), 
+--          created_at (TIMESTAMP), final_summary (TEXT), character_identity (JSONB)
+--
+-- Table: story_turns
+-- Purpose: Store individual story turns/scenes
+-- Columns: id (UUID), story_id (UUID FK), turn_number (INT), scene_text (TEXT),
+--          user_choice (TEXT), choices_presented (JSONB), image_url (TEXT), created_at (TIMESTAMP)
+--
+-- Indexes: story_turns(story_id, turn_number)

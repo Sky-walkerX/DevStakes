@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Manrope:wght@200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+/* --- NEW COLOR THEME (COPY THIS) --- */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  
+  /* CORE COLORS (The Main Pink Update) */
+  --bg: #0f0a12; /* Very deep dark charcoal with a pink tint */
+  --text: #f0e6ef; /* Soft off-white */
+  --text-h: #ffffff;
+  
+  /* ACCENT PINK */
+  --accent: #ff69b4; /* Classic Hot Pink */
+  --accent-light: #ffb6c1; /* Soft Pink */
+  
+  /* Updated Background Accents (Replace the old ones!) */
+  --accent-bg: rgba(255, 105, 180, 0.1); /* Subtle pink glow */
+  --accent-border: rgba(255, 105, 180, 0.5); /* Pink outline */
+  
+  --border: #2e2a33; /* Darker charcoal */
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+  background-color: var(--bg);
+  color: var(--text);
+}
+/*:root {
+  --font-headline: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-label: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: #0b1323;
+  --color-on-surface: #dbe2f8;
+  --color-on-surface-variant: #bac9cc;
+  
+  --color-primary: #c3f5ff;
+  --color-primary-container: #00e5ff;
+  --color-primary-fixed: #9cf0ff;
+  --color-primary-fixed-dim: #00daf3;
+  --color-on-primary: #00363d;
+  --color-on-primary-fixed: #001f24;
+  --color-on-primary-fixed-variant: #004f58;
+  
+  --color-secondary: #edb1ff;
+  --color-secondary-container: #6e208c;
+  --color-secondary-fixed: #f9d8ff;
+  --color-secondary-fixed-dim: #edb1ff;
+  --color-on-secondary: #520070;
+  --color-on-secondary-container: #e498ff;
+  --color-on-secondary-fixed: #320046;
+  --color-on-secondary-fixed-variant: #6e208c;
+
+  --color-tertiary: #ffe7e2;
+  --color-tertiary-container: #ffc2b3;
+  --color-tertiary-fixed: #ffdad2;
+  --color-tertiary-fixed-dim: #ffb4a2;
+  --color-on-tertiary: #621100;
+  --color-on-tertiary-container: #aa2600;
+  --color-on-tertiary-fixed: #3c0700;
+  --color-on-tertiary-fixed-variant: #8a1d00;
+
+  --color-surface: #0b1323;
+  --color-surface-dim: #0b1323;
+  --color-surface-bright: #31394a;
+  --color-surface-variant: #2d3546;
+  --color-surface-tint: #00daf3;
+  
+  --color-surface-container-lowest: #060e1d;
+  --color-surface-container-low: #131c2b;
+  --color-surface-container: #18202f;
+  --color-surface-container-high: #222a3a;
+  --color-surface-container-highest: #2d3546;
+
+  --color-outline: #849396;
+  --color-outline-variant: #3b494c;
+
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+  --color-on-error: #690005;
+  --color-on-error-container: #ffdad6;
+
+  --color-inverse-surface: #dbe2f8;
+  --color-inverse-on-surface: #283041;
+  --color-inverse-primary: #006875;
+}*/
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headline);
+}
+
+.glass-panel {
+  background-color: rgba(45, 53, 70, 0.4);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.text-glow-primary {
+  text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+.text-glow-secondary {
+  text-shadow: 0 0 15px rgba(237, 177, 255, 0.4);
+}
+
+/* App Transition Container */
+.app-transition-container {
+  width: 100%;
+}
+
+/* Base resets */
+* {
+  box-sizing: border-box;
+}
+
+/* Adding common layout utility classes to replace Tailwind utility usage where possible */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.min-h-screen { min-height: 100vh; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.overflow-hidden { overflow: hidden; }
+.z-0 { z-index: 0; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.grid { display: grid; }
+.gap-4 { gap: 1rem; }
+.gap-8 { gap: 2rem; }
+.gap-12 { gap: 3rem; }
+.p-4 { padding: 1rem; }
+.p-8 { padding: 2rem; }
+.max-w-7xl { max-width: 80rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.text-center { text-align: center; }
+.rounded-xl { border-radius: 0.75rem; }
+.rounded-2xl { border-radius: 1rem; }
+.rounded-full { border-radius: 9999px; }
+.transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; }
+.transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; }
+.cursor-pointer { cursor: pointer; }
+
+
+
+/* --- FORCED PINK THEME OVERRIDE --- */
+:root {
+  --accent: #ff69b4 !important;       /* Hot Pink */
+  --accent-bg: rgba(255, 105, 180, 0.15) !important;
+  --accent-border: #ff69b4 !important;
+  --text: #ffffff !important;
+  --bg: #0f0a12 !important;           /* Dark Background */
+}
+
+/* Force the background of the whole page */
+body {
+  background-color: #0f0a12 !important;
+  color: #ffffff !important;
+}
+
+/* Update the Counter specifically */
+.counter {
+  color: #ff69b4 !important;
+  background: rgba(255, 105, 180, 0.1) !important;
+  border-color: rgba(255, 105, 180, 0.5) !important;
+}
+
+/* Update the icons and links in the "Next Steps" section */
+#next-steps a {
+  color: #ff69b4 !important;
+  border: 1px solid rgba(255, 105, 180, 0.3) !important;
+}
+
+#next-steps a:hover {
+  background: rgba(255, 105, 180, 0.1) !important;
+  border-color: #ff69b4 !important;
+}
+
+/* Update any horizontal lines/borders */
+#next-steps, #spacer, #docs {
+  border-color: rgba(255, 105, 180, 0.2) !important;
+}
