@@ -21,48 +21,29 @@ genuinely involved in solving the mystery.
 - React
 - Supabase (Postgresql)
 
-## Implementation Details
-1. Case Overview Screen
-Crime story + key details
-Timer countdown (15–20 minutes per case)
-Progress indicator (clues collected, suspects analyzed)
-"Begin Investigation" CTA
-2. Case Files / Evidence Hub
-Timeline (interactive, chronological events)
-Evidence List (searchable, with descriptions)
-Suspect Profiles (motive, alibi, timeline conflicts)
-Clue discovery triggers (unlock new info as you investigate)
-3. Interactive Evidence Board
-Drag-and-drop canvas to connect evidence
-Connection lines between related clues
-Color-coded categories (weapon, location, motive, alibi)
-Notes section to annotate findings
-Real-time visual representation of detective work
-4. Suspect Analysis Panel
-Individual suspect deep-dive
-View alibi vs. timeline conflicts
-Highlight contradictions automatically
-Track motive, opportunity, means
-5. Final Decision
-"Accuse" button locks in verdict
-Reveals culprit + explanation
-Score calculation:
-Base Score: 100
--10 per minute over time
-+15 per correct clue connection
--20 for wrong accusation
-Comparison: "You solved in X minutes! "
-Show correct answer + reasoning
-6. Results Screen
-Verdict Reveal (correct/incorrect)
-Score & Ranking
-Case Summary (what you found, what you missed)
-Share Results (screenshot or social)
-Play Again / Next Case
-7. Auth
-added log in, register and leaderboard
-using Supabase Auth 
+## Features
 
+- **Interactive Investigation Board**: A spatial canvas where players can drag-and-drop evidence items to visually organize their thoughts and create connections, mimicking a classic "murder board."
+- **Immersive Narrative**: Engaging case files with detailed backgrounds, suspect descriptions, alibis, and descriptions of physical evidence.
+- **Agent AI (Virtual Assistant)**: A voice-enabled guide character that provides a step-by-step tutorial, dynamic case briefings, and helpful investigation tips.
+- **Dynamic Scoring System**: Performance is calculated based on investigation speed (time bonus), evidence discovery, connection density, and accusation accuracy.
+- **Global Leaderboard**: Securely tracks and displays top-performing detectives using real-time database synchronization.
+- **Authentication**: User accounts powered by Supabase for persisting progress and scores across sessions.
+
+## Implementation Details
+
+### Core Architecture
+- **Framework**: Built with [React](https://reactjs.org/) and [Vite](https://vitejs.dev/) for a lightning-fast development experience and optimized production bundles.
+- **State Management**: Uses [Zustand](https://github.com/pmndrs/zustand) for highly efficient, decentralized global state management, handling everything from audio synchronization to complex investigation board mechanics.
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) is utilized for sleek page transitions, interactive UI elements, and the sophisticated loading system.
+- **Database & Auth**: Integrated with [Supabase](https://supabase.com/) for PostgreSQL storage, real-time leaderboard updates, and easy-to-use authentication.
+
+### Key Technical Aspects
+- **Audio Synthesis**: Employs the browser's native **Web Speech API** for Text-to-Speech capabilities. A custom "global interaction listener" is implemented to unlock audio playback across modern browsers.
+- **Graph-based Logic**: The investigation board uses a custom graph implementation to track nodes (evidence) and edges (connections), which directly influences the final score.
+- **Responsive Styling**: Custom CSS combined with Tailwind utilities ensures a premium, dark-mode "detective aesthetic" that is responsive across different screen sizes.
+
+  
 ## 🚀 How to Run Locally
 
 Follow these steps to set up and run ClueConnect on your local machine:
