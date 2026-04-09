@@ -4,6 +4,7 @@ import { ArrowLeft, Briefcase, Plus, Wand2 } from 'lucide-react';
 import { useNodeStore } from '../store/useNodeStore';
 import { useCalendarStore } from '../store/useCalendarStore';
 import { GlowButton } from '../components/ui/GlowButton';
+import { generateDescription as apiGenerateDescription } from '../api/client';
 
 export default function NewProjectPage() {
   const navigate = useNavigate();
@@ -18,27 +19,26 @@ export default function NewProjectPage() {
   
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // Stub function to be replaced by the user's actual API integration
+  // Groq-powered AI description generation via FastAPI backend
   const handleGenerateDescription = async () => {
     if (!taskName.trim()) return;
     
     setIsGenerating(true);
     
     try {
-      // TODO: Replace this timeout with the actual API call
-      // Example:
-      // const response = await fetch('YOUR_API_ENDPOINT', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ taskName, priority })
-      // });
-      // const data = await response.json();
-      // setDescription(data.generatedText);
-
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setDescription(`Generated description for the strategic initialization of: ${taskName}. \n\nThis initiative focuses on establishing core foundations before scaling the operation matrix. Focus required.`);
-      
+      const generatedText = await apiGenerateDescription(taskName, priority);
+      setDescription(generatedText);
     } catch (error) {
-      console.error("Failed to generate description", error);
+      console.error("Failed to generate description via API, using fallback:", error);
+      // Fallback if backend is unreachable
+      setDescription(
+        `MISSION BRIEF — ${priority.toUpperCase()} PRIORITY\n\n` +
+        `Initiative "${taskName}" has been queued for strategic deployment within the Kinetic Archive. ` +
+        `This operation focuses on establishing core knowledge foundations and mapping synaptic pathways ` +
+        `for accelerated comprehension.\n\n` +
+        `The Aegis Engine will monitor burnout vectors and dynamically adjust session intensity ` +
+        `to maintain optimal cognitive throughput. Stay sharp, Operator.`
+      );
     } finally {
       setIsGenerating(false);
     }

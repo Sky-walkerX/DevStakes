@@ -2,10 +2,15 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { SyllabusNode, NodeConnection } from '../types';
 import { syllabusNodes, syllabusConnections } from '../data/syllabusData';
+import * as api from '../api/client';
 
 /* ──────────────────────────────────────────────────────────
-   Node Store — Manages syllabus node positions & drag state
+   Node Store — API-backed with local fallback
+   Manages syllabus node positions & drag state
    ────────────────────────────────────────────────────────── */
+
+// Debounce helper for position updates
+let positionUpdateTimer: ReturnType<typeof setTimeout> | null = null;
 
 interface NodeState {
   nodes: SyllabusNode[];
@@ -18,7 +23,10 @@ interface NodeState {
   searchQuery: string;
   isLinkingMode: boolean;
   selectedLinkingNodeId: string | null;
+  isBackendConnected: boolean;
+  isLoading: boolean;
 
+  fetchFromBackend: () => Promise<void>;
   startDrag: (id: string, offsetX: number, offsetY: number) => void;
   updateNodePosition: (id: string, x: number, y: number) => void;
   panMap: (dx: number, dy: number) => void;
@@ -49,17 +57,46 @@ export const useNodeStore = create<NodeState>()(
   searchQuery: '',
   isLinkingMode: false,
   selectedLinkingNodeId: null,
+  isBackendConnected: false,
+  isLoading: false,
+
+  fetchFromBackend: async () => {
+    set({ isLoading: true });
+    try {
+      const data = await api.fetchNodes();
+      set({
+        nodes: data.nodes,
+        connections: data.connections,
+        isBackendConnected: true,
+        isLoading: false,
+      });
+    } catch (error) {
+      console.warn('⚠️ Backend unreachable for nodes, using local data:', error);
+      set({ isBackendConnected: false, isLoading: false });
+    }
+  },
 
   startDrag: (id, offsetX, offsetY) => {
     set({ draggedNodeId: id, dragOffset: { x: offsetX, y: offsetY } });
   },
 
   updateNodePosition: (id, x, y) => {
+    const { isBackendConnected } = get();
+
+    // Immediate local update for smooth dragging
     set((state) => ({
       nodes: state.nodes.map((n) =>
         n.id === id ? { ...n, x, y } : n
       ),
     }));
+
+    // Debounced sync to backend (avoid spamming during drag)
+    if (isBackendConnected) {
+      if (positionUpdateTimer) clearTimeout(positionUpdateTimer);
+      positionUpdateTimer = setTimeout(() => {
+        api.updateNode(id, { x, y }).catch(console.error);
+      }, 500);
+    }
   },
 
   panMap: (dx, dy) => {
@@ -77,49 +114,80 @@ export const useNodeStore = create<NodeState>()(
   },
 
   toggleNodeStatus: (id) => {
+    const { isBackendConnected } = get();
+
+    let newStatus: 'active' | 'completed' | 'locked' = 'active';
+    const node = get().nodes.find((n) => n.id === id);
+    if (node) {
+      newStatus = node.status === 'completed'
+        ? 'active'
+        : node.status === 'active'
+          ? 'completed'
+          : 'active';
+    }
+
     set((state) => ({
       nodes: state.nodes.map((n) =>
-        n.id === id
-          ? {
-              ...n,
-              status:
-                n.status === 'completed'
-                  ? 'active'
-                  : n.status === 'active'
-                    ? 'completed'
-                    : 'active', // Allow clicking locked nodes to become active
-            }
-          : n
+        n.id === id ? { ...n, status: newStatus } : n
       ),
     }));
+
+    if (isBackendConnected) {
+      api.updateNode(id, { status: newStatus }).catch(console.error);
+    }
   },
 
   addNode: (node, parentId) => {
-    set((state) => {
-      const newId = `node-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-      const newConnection = parentId ? { from: parentId, to: newId } : null;
-      
-      return {
-        nodes: [
-          ...state.nodes,
-          {
-            ...node,
-            id: newId,
-          },
-        ],
-        connections: newConnection
-          ? [...state.connections, newConnection]
-          : state.connections,
-      };
-    });
+    const { isBackendConnected } = get();
+
+    if (isBackendConnected) {
+      api.createNode(node, parentId)
+        .then((created) => {
+          set((state) => {
+            const newConnection = parentId ? { from: parentId, to: created.id } : null;
+            return {
+              nodes: [...state.nodes, created],
+              connections: newConnection
+                ? [...state.connections, newConnection]
+                : state.connections,
+            };
+          });
+        })
+        .catch(console.error);
+    } else {
+      // Local-only fallback
+      set((state) => {
+        const newId = `node-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+        const newConnection = parentId ? { from: parentId, to: newId } : null;
+
+        return {
+          nodes: [
+            ...state.nodes,
+            {
+              ...node,
+              id: newId,
+            },
+          ],
+          connections: newConnection
+            ? [...state.connections, newConnection]
+            : state.connections,
+        };
+      });
+    }
   },
 
   removeNode: (id) => {
+    const { isBackendConnected } = get();
+
     set((state) => ({
       nodes: state.nodes.filter((n) => n.id !== id),
       connections: state.connections.filter((c) => c.from !== id && c.to !== id),
       selectedLinkingNodeId: state.selectedLinkingNodeId === id ? null : state.selectedLinkingNodeId,
     }));
+
+    if (isBackendConnected) {
+      api.deleteNode(id).catch(console.error);
+    }
   },
 
   toggleLinkingMode: () => {
@@ -144,14 +212,27 @@ export const useNodeStore = create<NodeState>()(
       (c) => (c.from === sourceId && c.to === targetId) || (c.from === targetId && c.to === sourceId)
     );
 
-    set({
-      connections: alreadyExists
-        ? state.connections.filter(
-            (c) => !((c.from === sourceId && c.to === targetId) || (c.from === targetId && c.to === sourceId))
-          )
-        : [...state.connections, { from: sourceId, to: targetId }],
-      selectedLinkingNodeId: null, // Reset after linking
-    });
+    if (alreadyExists) {
+      // Remove connection
+      set({
+        connections: state.connections.filter(
+          (c) => !((c.from === sourceId && c.to === targetId) || (c.from === targetId && c.to === sourceId))
+        ),
+        selectedLinkingNodeId: null,
+      });
+      if (state.isBackendConnected) {
+        api.deleteConnection(sourceId, targetId).catch(console.error);
+      }
+    } else {
+      // Create connection
+      set({
+        connections: [...state.connections, { from: sourceId, to: targetId }],
+        selectedLinkingNodeId: null,
+      });
+      if (state.isBackendConnected) {
+        api.createConnection(sourceId, targetId).catch(console.error);
+      }
+    }
   },
 
   setFullscreen: (value) => set({ isFullscreen: value }),
