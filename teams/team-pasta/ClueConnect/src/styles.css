@@ -1,0 +1,391 @@
+/* ── Global Layout & Typography Updates ──────────────── */
+body {
+  font-size: 16px;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* ── CTA Buttons ──────────────────────────────────────── */
+.btn-primary, .btn-secondary, .btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--accent-purple);
+  color: #fff;
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-violet);
+  border-color: rgba(139, 92, 246, 0.8);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Layout Modules ───────────────────────────────────── */
+.home-page, .game-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+.app-header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo-badge {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.status-chip.live {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: var(--accent-red);
+}
+
+.status-chip.edition {
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+}
+
+/* ── Hero Section ─────────────────────────────────────── */
+.game-panel-side {
+  width: 25%;
+  flex-shrink: 0;
+}
+
+.game-panel-centre {
+  flex: 1;
+  width: 50%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-section {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px 48px;
+}
+
+.hero-badge {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background-color: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.hero-title {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.hero-title h1 {
+  font-family: var(--font-display);
+  font-size: 80px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .hero-title h1 {
+    font-size: 96px;
+  }
+}
+
+.hero-stats {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 56px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.stat-item {
+  padding: 16px 28px;
+  text-align: center;
+}
+
+.stat-divider {
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Case Selection ───────────────────────────────────── */
+.case-selection {
+  position: relative;
+  z-index: 10;
+  padding: 0 0 48px;
+  width: 100%;
+}
+
+/* ── Horizontal scroll track ── */
+.case-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 12px 40px 24px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  /* Hide scrollbar on Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139,92,246,0.3) transparent;
+}
+
+.case-grid:active { cursor: grabbing; }
+
+/* Webkit scrollbar styling */
+.case-grid::-webkit-scrollbar {
+  height: 4px;
+}
+.case-grid::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 0 40px;
+}
+.case-grid::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.35);
+  border-radius: 4px;
+}
+.case-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.6);
+}
+
+/* Each card fills viewport minus peek */
+.case-card-wrapper {
+  flex: 0 0 340px;
+  scroll-snap-align: start;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+}
+
+.case-card {
+  position: relative;
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: var(--bg-card);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.case-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.case-card-header {
+  position: relative;
+  padding: 24px 24px 20px; /* Increased padding */
+}
+
+.case-card-body {
+  padding: 20px 24px; /* Increased padding */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.case-chips-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.info-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  flex: 1;
+}
+
+/* ── Game Page Spacing ────────────────────────────────── */
+.game-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--bg-primary);
+  background-image:
+    linear-gradient(rgba(139,92,246,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.game-main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  gap: 14px;
+  padding: 14px 16px 16px;
+}
+
+@media (max-width: 1024px) {
+  .game-main-content {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(160deg, rgba(10,14,22,0.98) 0%, rgba(6,9,16,0.99) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* ── Specific Panel adjustments ───────────────────────── */
+.evidence-hub {
+  display: flex;
+  flex-direction: column;
+}
+
+.evidence-hub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Vertical Spacing for items */
+  padding: 20px;
+}
+
+.suspect-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* More breathing room */
+  padding: 24px;
+}
+
+.detail-card {
+  padding: 20px; /* Increased padding inside details */
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.decision-modal {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  padding: 32px; /* Increased Modal Padding */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.suspect-option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Vertical Spacing */
+}
