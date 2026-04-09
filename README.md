@@ -1,146 +1,152 @@
-# DevStakes (Axios Web Wing)
+# 📝 inkpad — Offline-First Markdown Note-Taking App
 
-
-**[Register Here →](https://forms.gle/yrQVjSU84b2Wk47Q8)**
-
----
-
-## Event Overview
-
-| Detail | Info |
-|---|---|
-| Duration | 3.5 days (84 hours) |
-| Team Size | 4-5 members (at least 1 girl mandatory) |
-| Primary Focus | React (Frontend) |
-| Bonus Points | Up to +20 for backend, ML integration, or strong system design |
+> A distraction-free, highly performant note-taking application designed for developers and students, capable of working entirely offline.
 
 ---
 
-## Timeline
+## 📌 Project Overview
 
-### Day-0
-
-| Time | Activity |
-|---|---|
-| 12:00 PM | Ideas revealed — teams choosing from the given set can start coding immediately |
-| 12:00 PM – 6:00 PM | Custom Idea Submission Window |
-| 10:00 PM | Idea approval results announced — event officially starts for all teams |
-
-### Day-1, Day-2, Day-3 — Coding Period
-
-- Coding stops at the **end of Day-3**
-- The **top 5 teams** may be called for an **offline pitch** to explain their codebase and demonstrate understanding
-- Top 3 winners are decided from the offline pitch
+**inkpad** is a lightweight alternative to Notion/Obsidian built with React. It features a real-time Markdown editor with live preview, full offline support using IndexedDB and Service Workers, and auto-save on every keystroke — so you never lose your work.
 
 ---
 
-## Scoring Criteria
+## ✨ Features
 
-| Criterion | Description | Points |
-|---|---|---|
-| Core Functionality | Does it actually work end-to-end? | 30 |
-| UI / UX Quality | Visual polish, responsiveness, usability | 20 |
-| Performance | Lighthouse score — speed, accessibility, SEO | 15 |
-| Clean Code & Structure | Readable, modular, no spaghetti | 15 |
-| Git Practices | Commits, branching, PRs with descriptions | 10 |
-| Deployed & Live Link | Vercel / Netlify, accessible URL submitted | 5 |
-| Idea Bonus *(custom only)* | Originality & quality of self-proposed idea | 0–5 |
-| **Total** | | **100** |
-
-> **+20 bonus points** available for implementing a backend, integrating ML models, or demonstrating strong system design.
+- 📄 **Real-time Markdown Preview** — Split / Edit / Preview modes
+- 💾 **Offline-First Architecture** — Works without internet using IndexedDB + Service Worker
+- ⚡ **Auto-Save** — Debounced save every 800ms, persists across sessions and tab closes
+- 🎨 **Syntax Highlighting** — Code blocks highlighted via highlight.js
+- 🏷️ **Auto Tag Extraction** — Write `#tagname` anywhere to auto-tag notes
+- 📌 **Pin Notes** — Pin important notes to the top
+- 🌙 **Dark / Light Mode** — Persisted to localStorage
+- 📤 **Export** — Download any note as a `.md` file
+- ✅ **Task Lists** — Interactive checkboxes with `- [ ]` syntax
+- ⌨️ **Smart Editor** — Auto-continues lists, blockquotes; Tab indents; keyboard shortcuts
 
 ---
 
-## Ideas
+## ⌨️ Keyboard Shortcuts
 
-You may choose **one** of the ideas below, or propose your **own custom idea** (subject to approval, eligible for up to 5 bonus points).
-
----
-
-### 1. Real-Time "Auction/Bidding" Portal
-
-A high-adrenaline platform where unique items are put up for timed, live auctions, requiring instant feedback and a seamless user experience.
-
-- **Frontend Challenge:** Handling race conditions and state synchronization. When two users bid at the exact same millisecond, the frontend must handle "Optimistic Updates" (showing the user's bid immediately for a snappy UX) while simultaneously validating against the server clock to handle rejections gracefully.
-- **Practical Use:** E-commerce, charity fundraisers, or digital asset trading.
+| Action        | Shortcut   |
+|---------------|------------|
+| Bold          | Ctrl + B   |
+| Italic        | Ctrl + I   |
+| Link          | Ctrl + K   |
+| Tab Indent    | Tab        |
+| New List Item | Enter      |
 
 ---
 
-### 2. Smart "Expense Splitter"
+## 🛠️ Tech Stack
 
-A comprehensive financial utility to manage group expenses, track shared bills, and "settle up" debts among friends or roommates.
-
-- **Frontend Challenge:** Building intuitive, dynamic forms for complex splits (e.g., "A paid 70%, B and C split the rest, but D owes for drinks"). Managing complex localized state without lagging the UI.
-- **Algorithmic Complexity:** The "Simplifying Debts" algorithm (often solved using graph theory/flow networks). If A owes B $10 and B owes C $10, the system should suggest A pays C $10 directly. Handling math precision and multi-currency conversions locally in the browser.
-- **Practical Use:** Essential for university students living in hostels, shared flats, or group travel.
-
----
-
-### 3. Dynamic Team Builder
-
-An intelligent matching platform where users input their skills, and the system automatically forms balanced, highly functional teams based on specific event constraints.
-
-- **Frontend Challenge:** Creating a rich, interactive drag-and-drop interface (similar to a Kanban board) where organizers can visually tweak the auto-generated teams. Visualizing skill distributions using charts (e.g., radar charts for team stats).
-- **Algorithmic Complexity:** Constraint satisfaction. If 80% of users are frontend developers and 20% are designers, the system must still create fair teams without perfect combinations, distributing the rare skills evenly.
-- **Practical Use:** Automating team formation for hackathons, college projects, or corporate workshops.
+| Technology         | Purpose                         |
+|--------------------|---------------------------------|
+| React 18           | UI Framework                    |
+| Vite               | Build Tool and Dev Server       |
+| Tailwind CSS v3    | Styling                         |
+| marked v17         | Markdown to HTML Parser         |
+| highlight.js       | Code Syntax Highlighting        |
+| IndexedDB (native) | Offline Note Storage            |
+| Service Worker     | Offline Caching and PWA Support |
+| lucide-react       | Icons                           |
 
 ---
 
-### 4. Smart "Exam Preparation Planner"
+## 📁 Project Structure
 
-An adaptive study schedule generator that takes a student's syllabus, available hours, and target grades to map out a day-by-day learning journey.
-
-- **Frontend Challenge:** Building interactive calendars, Gantt charts, or timeline views from scratch in React. Handling complex date/time logic and allowing users to drag, drop, and resize study blocks.
-- **Algorithmic Complexity:** Priority-based time allocation. What happens when time is insufficient for full syllabus coverage? The system must dynamically recalculate and prioritize high-weightage topics over minor ones.
-- **Practical Use:** Helping students manage time efficiently and reduce pre-exam anxiety.
-
----
-
-### 5. Visual Node-Based Learning Roadmap Builder
-
-A platform where educators or seniors can create interactive, branching "tech trees" (like in video games) for learning new skills (e.g., "How to learn Web Dev").
-
-- **Frontend Challenge:** Heavy manipulation of the DOM and Canvas/SVG. Using libraries like React Flow to let users drag nodes, connect them with animated edges, zoom, pan, and handle complex graph state management in the browser.
-- **Practical Use:** Replacing static PDF roadmaps with interactive, trackable learning journeys for college clubs or online courses.
-
----
-
-### 6. Offline-First Markdown Note-Taking App
-
-A distraction-free, highly performant note-taking application designed for developers and students, capable of working entirely offline.
-
-- **Frontend Challenge:** Building a rich text editor that parses Markdown to HTML in real-time. Implementing an "Offline-First" architecture using IndexedDB/Service Workers in React, ensuring the user can close the tab, lose internet, and never lose a keystroke.
-- **Practical Use:** A lightweight Notion/Obsidian alternative tailored for rapid class notes or code snippets.
-
----
-
-### 7. Custom Idea *(Bonus: up to 5 points)*
-
-Have a unique idea not listed above? Propose it!
-
-- Each team can submit **at most 2 custom ideas** during the Day-0 submission window (12PM–6PM).
-- Approved ideas earn an **idea bonus of 0–5 points** based on originality and quality.
-- Approval results are announced at **10PM on Day-0**.
-
----
-
-## Rules
-
-1. Teams must have **4 to 5 members**, with **at least 1 girl**.
-2. The primary tech stack must be **React based** (frontend-first).
-3. Each team must choose **one idea** — either from the given set or a custom approved idea.
-4. Teams submitting a custom idea can submit a **maximum of 2 ideas** for review.
-5. Teams selecting from the given set may **begin coding at 12PM on Day-0**.
-6. Custom idea teams may begin coding (for custom idea) only after **approval at 10PM on Day-0**.
-7. All code must be pushed to a **Git repository** with clear commit history, branching, and PR descriptions.
-8. A **deployed live link** (Vercel/Netlify) must be submitted for full scoring.
-9. Coding officially **stops at the end of Day-3**.
-10. Top 5 teams may be invited for an **offline pitch** to verify codebase understanding.
+```
+inkpad/
+├── public/
+│   └── sw.js                        # Service Worker (offline caching)
+│
+├── src/
+│   ├── App.jsx                      # Root layout, online/offline detection
+│   ├── main.jsx                     # Entry point + Service Worker registration
+│   ├── index.css                    # Tailwind base + global styles
+│   │
+│   ├── components/
+│   │   ├── Sidebar.jsx              # Note list, search, tag filter, actions
+│   │   ├── Toolbar.jsx              # Markdown formatting toolbar
+│   │   ├── Editor.jsx               # Smart textarea with keyboard handling
+│   │   ├── Preview.jsx              # Live rendered HTML preview
+│   │   ├── StatusBar.jsx            # Save status, word/char/line count
+│   │   ├── EmptyState.jsx           # Welcome screen with cheatsheet
+│   │   └── ErrorBoundary.jsx        # Catches runtime errors gracefully
+│   │
+│   ├── hooks/
+│   │   ├── useNotes.js              # Note state + 800ms debounced autosave
+│   │   └── useTheme.js              # Dark/light mode with localStorage
+│   │
+│   ├── services/
+│   │   └── db.js                    # IndexedDB CRUD operations
+│   │
+│   └── utils/
+│       └── markdown.js              # Marked parser + tag/word extractors
+│
+├── index.html
+├── tailwind.config.js
+├── vite.config.js
+└── package.json
+```
 
 ---
 
-## Registration
+## 🚀 Getting Started
 
-**[Fill the Registration Form →](https://forms.gle/yrQVjSU84b2Wk47Q8)**
+### Prerequisites
+
+- Node.js v18 or higher (LTS recommended) — download from nodejs.org
+- npm (comes with Node.js)
+
+### Installation and Run
+
+```bash
+# 1. Unzip the project
+unzip inkpad-notes-app.zip
+cd markdown-notes
+
+# 2. Install dependencies
+npm install
+
+# 3. Start development server
+npm run dev
+```
+
+Then open your browser and visit: http://localhost:5173
+
+### Production Build
+
+```bash
+npm run build
+npm run preview
+```
 
 ---
+
+## 🗄️ How Offline Works
+
+1. IndexedDB stores all notes directly in the browser — no server needed
+2. Service Worker caches app assets on first load
+3. On subsequent visits, the app loads from cache even with no internet
+4. Every keystroke is auto-saved within 800ms to IndexedDB
+5. An offline indicator appears when network is lost — notes keep saving locally
+
+---
+
+## 👥 Team Members
+ TEAM NAME: CODEX
+ 1. ABIR DAS (LEADER)
+ 2. JASKARAN SINGH
+ 3. MALAY GIRI
+ 4. RAHUL SINGH
+ 5. BHUKYA SANKSHITHA
+
+---
+
+## 📄 License
+
+This project is built for educational purposes.
+
+---
+
+> "The best tool is the one that gets out of your way."
