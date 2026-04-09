@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Shield, Sparkles, ArrowLeft, RotateCcw, Home, Award, Loader2 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -107,8 +107,9 @@ export default function StoryPlayer() {
           </motion.div>
         ) : !isFinished ? (
           <GameScene 
-            key={currentNode?.text || 'scene'} 
+            key="game-scene" 
             node={currentNode} 
+            history={history}
             onChoice={handleChoice} 
             onNavigate={navigate}
             isLoading={isLoading}
@@ -128,7 +129,18 @@ export default function StoryPlayer() {
   );
 }
 
-function GameScene({ node, onChoice, onNavigate, isLoading }) {
+function GameScene({ node, onChoice, onNavigate, isLoading, history }) {
+  const bottomRef = useRef(null);
+  
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'nearest'
+      });
+    }
+  }, [node, history, isLoading]);
+
   if (!node) return null;
 
   return (
@@ -143,7 +155,7 @@ function GameScene({ node, onChoice, onNavigate, isLoading }) {
       <div className="scene-overlay" />
       
       <div className="scene-header">
-        <button className="btn-back-hud" onClick={() => navigate('/', { state: { transition: 'push_back' } })} disabled={isLoading}>
+        <button className="btn-back-hud" onClick={() => onNavigate('/', { state: { transition: 'push_back' } })} disabled={isLoading}>
           <ArrowLeft size={20} />
           <span>Exit Simulation</span>
         </button>
@@ -158,37 +170,71 @@ function GameScene({ node, onChoice, onNavigate, isLoading }) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="narrative-box glass-panel-hud"
+          className="narrative-box glass-panel-hud p-6 md:p-12 space-y-8"
         >
-          <p className="narrative-text">
-             {node.text}
-          </p>
-          {(node.setting || node.mood) && (
-            <div className="mt-4 flex gap-4 opacity-50 uppercase tracking-widest text-[10px] font-bold">
-              {node.setting && <span>SETTING // {node.setting}</span>}
-              {node.mood && <span>MOOD // {node.mood}</span>}
-            </div>
-          )}
-        </motion.div>
 
-        {!node.isTerminal && node.choices && node.choices.length > 0 && (
-          <div className="choices-container">
-            {node.choices.map((choice, idx) => (
-              <motion.button
-                key={idx}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + (idx * 0.2), duration: 0.5 }}
-                onClick={() => onChoice(choice)}
-                disabled={isLoading}
-                className={`choice-btn glass-panel-hud group ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-              >
-                <span className="choice-indicator ml-2 mr-4 opacity-50 group-hover:opacity-100 transition-opacity">►</span>
-                <span className="choice-text">{choice.text}</span>
-              </motion.button>
+            {history && history.map((item, idx) => (
+              <div key={idx} className="history-segment opacity-80 border-b border-white/5 pb-6">
+                <p className="narrative-text text-lg opacity-90">{item.text}</p>
+                <div className="mt-4 py-2 px-4 bg-primary/10 border-l-2 border-primary rounded-r-md">
+                   <p className="text-primary text-xs font-bold uppercase tracking-widest">{`> Decided: ${item.choiceMade}`}</p>
+                </div>
+              </div>
             ))}
-          </div>
-        )}
+            
+            <motion.div
+              key={node.text}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <p className="narrative-text">
+                 {node.text}
+              </p>
+              
+              {(node.setting || node.mood) && (
+                <div className="mt-6 flex gap-4 opacity-40 uppercase tracking-tighter text-[9px] font-bold">
+                  {node.setting && <span>LOC // {node.setting}</span>}
+                  {node.mood && <span>VIBE // {node.mood}</span>}
+                </div>
+              )}
+            </motion.div>
+
+            {!node.isTerminal && node.choices && node.choices.length > 0 && (
+              <motion.div 
+                key={`choices-${node.text}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="choices-container-inline mt-12 pb-8"
+              >
+                <div className="flex flex-col gap-8">
+                  {node.choices.map((choice, idx) => (
+                    <motion.button
+                      key={`${node.text}-${idx}`}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.8 + (idx * 0.1) }}
+                      onClick={() => onChoice(choice)}
+                      disabled={isLoading}
+                      className={`choice-btn-modern ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                      <span className="choice-indicator-modern">►</span>
+                      <span className="choice-text-modern">{choice.text}</span>
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {isLoading && (
+              <div className="flex items-center gap-3 py-4 opacity-50 italic text-sm">
+                <Loader2 size={14} className="animate-spin" />
+                <span>Generating your future...</span>
+              </div>
+            )}
+            <div ref={bottomRef} className="h-20" />
+          </motion.div>
       </div>
     </motion.div>
   );
@@ -218,7 +264,15 @@ function SummaryScreen({ history, ratingInfo, finalText, onRestart, onNavigate }
         <div className="summary-body">
           <div className="final-verdict-box">
             <h3 className="verdict-title flex items-center gap-2"><Award size={20}/> Outcome</h3>
-            <p className="verdict-text">{finalText}</p>
+            <div className="verdict-text flex flex-col gap-4 max-h-[40vh] overflow-y-auto pr-4">
+              {history && history.map((item, idx) => (
+                <div key={idx} className="border-b border-white/10 pb-4">
+                  <p className="opacity-90">{item.text}</p>
+                  <p className="text-primary text-sm font-bold mt-2 uppercase tracking-widest">{`> ${item.choiceMade}`}</p>
+                </div>
+              ))}
+              <p>{finalText}</p>
+            </div>
           </div>
 
           <div className="history-box">
@@ -241,7 +295,7 @@ function SummaryScreen({ history, ratingInfo, finalText, onRestart, onNavigate }
             <RotateCcw size={20} />
             <span>Forge New Path</span>
           </button>
-          <button onClick={() => navigate('/', { state: { transition: 'push_back' } })} className="btn-summary-action secondary-action">
+          <button onClick={() => onNavigate('/', { state: { transition: 'push_back' } })} className="btn-summary-action secondary-action">
             <Home size={20} />
             <span>Return to Nexus</span>
           </button>

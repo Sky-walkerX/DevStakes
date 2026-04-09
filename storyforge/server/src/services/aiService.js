@@ -5,9 +5,10 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'dummy_key' });
 
 const systemPrompt = `You are the StoryForge Engine, a master AI storyteller. 
 Your goal is to progress a dynamic narrative based on the user's chosen genre and previous choices.
+Write compelling, highly engaging, and non-repetitive prose. Drive the plot forward dramatically with each step.
 You MUST output your response in STRICT JSON format, exactly matching this schema:
 {
-  "text": "The 3-5 lines of the narrative scenario progressing the story.",
+  "text": "The next 4-6 lines of the narrative scenario progressing the story. Do NOT repeat previous text. Make it gripping.",
   "setting": "Brief 1-2 words setting for image generation (e.g., 'dark forest', 'neon city')",
   "mood": "Brief 1 word mood (e.g., 'tense', 'calm', 'chaotic')",
   "isTerminal": boolean, // Set to true ONLY if the story is concluding or the player reaches an end.
@@ -17,7 +18,7 @@ You MUST output your response in STRICT JSON format, exactly matching this schem
     { "text": "Choice 3 text...", "score": 60 }
   ]
 }
-Do not include any reasoning, markdown formatting, or text outside the JSON object. Keep choices under 15 words.`;
+Do not include any reasoning, markdown formatting, or text outside the JSON object. Keep choices distinct and under 15 words.`;
 
 const fallbackPayload = {
   text: "The fabric of this realm seems temporally unstable right now. You must carefully navigate the distortion.",
@@ -52,7 +53,7 @@ const aiService = {
           { role: 'system', content: systemPrompt },
           { role: 'user', content: prompt }
         ],
-        model: 'llama-3.1-8b-instant',
+        model: 'llama-3.3-70b-versatile',
         response_format: { type: "json_object" },
         temperature: 0.7,
       });
