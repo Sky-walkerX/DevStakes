@@ -26,7 +26,7 @@ export default function Identity() {
         {/* Profile Header */}
         <header className="profile-header group">
           <img 
-            src="https://picsum.photos/seed/nebula/1200/400" 
+            src="/assets/profile-banner.png" 
             alt="Cover" 
             className="profile-cover-img"
             referrerPolicy="no-referrer"
@@ -37,7 +37,7 @@ export default function Identity() {
             <div className="profile-avatar-container">
               <div className="profile-avatar-wrapper">
                 <img 
-                  src="https://picsum.photos/seed/architect/200/200" 
+                  src="/assets/profile-avatar.png" 
                   alt="Elias Thorne" 
                   className="profile-avatar"
                   referrerPolicy="no-referrer"
@@ -57,11 +57,17 @@ export default function Identity() {
             </div>
             
             <div className="profile-actions">
-              <button className="btn-edit glass-panel">
+              <button 
+                className="btn-edit glass-panel"
+                onClick={() => alert('Identity Modification Protocol initiated... (Feature coming soon)')}
+              >
                 <Edit3 size={16} />
                 <span>Edit Identity</span>
               </button>
-              <button className="btn-settings glass-panel">
+              <button 
+                className="btn-settings glass-panel"
+                onClick={() => alert('Accessing neural settings... (Feature coming soon)')}
+              >
                 <Settings size={20} />
               </button>
             </div>
@@ -84,13 +90,13 @@ export default function Identity() {
               <ProjectCard 
                 title="The Neon Syndicate" 
                 progress={85} 
-                image="https://picsum.photos/seed/neon/400/300" 
+                image="/assets/project-neon.png" 
                 lastEdit="2 hours ago"
               />
               <ProjectCard 
                 title="Aether Drift" 
                 progress={42} 
-                image="https://picsum.photos/seed/drift/400/300" 
+                image="/assets/project-drift.png" 
                 lastEdit="Yesterday"
               />
             </div>

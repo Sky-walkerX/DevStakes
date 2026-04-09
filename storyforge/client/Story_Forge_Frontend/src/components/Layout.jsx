@@ -54,7 +54,7 @@ export default function Layout({ children }) {
           <div className="profile-image-wrapper">
             <img 
               className="profile-img" 
-              src="https://picsum.photos/seed/architect/100/100" 
+              src="/assets/profile-avatar.png" 
               alt="Profile"
               referrerPolicy="no-referrer"
             />
