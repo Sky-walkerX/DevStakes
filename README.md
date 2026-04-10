@@ -1,9 +1,16 @@
 # DevStakes (Axios Web Wing)
 
-#Team Vector Visionary
-repo link :https://github.com/ShreyanshGiri08/devstakes_project
-**[Register Here →](https://forms.gle/yrQVjSU84b2Wk47Q8)**
+> 📌 **For the project submission, see the correct repository here:**
+> 🔗 [github.com/ShreyanshGiri08/devstakes_project](https://github.com/ShreyanshGiri08/devstakes_project)
 
+---
+
+
+**Team Vector Visionary** built [**Vector Visionary**](https://github.com/ShreyanshGiri08/devstakes_project) — an AI-powered visual learning engine that turns any topic into a personalized, node-based mastery roadmap in seconds.
+
+---
+
+#Team Vector Visionary
 ---
 
 ## Event Overview
